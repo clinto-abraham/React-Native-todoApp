@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native';
 import AddToDo from './addToDo';
 
 export default function Content ({onPress}) {
@@ -11,16 +11,22 @@ export default function Content ({onPress}) {
 
 
     const submitHandler = (text) => {
-          
+      if(text.length >= 1){
         setList((prevToDos)=> {
-            return [
-              { 
-                name: text, 
-                key: Math.random().toString()
-              },
-              ...prevToDos
-            ];
-        });
+          return [
+            { 
+              name: text, 
+              key: Math.random().toString()
+            },
+            ...prevToDos
+          ];
+      });
+      } else {
+        Alert.alert('OPPS!', 'To add text, Characters must be 1 or more', [
+          {text: 'Understood', onPress: () => console.log('alert closed')}
+        ])
+      }    
+        
     };
 
     const longPressHandler = (key) => {
